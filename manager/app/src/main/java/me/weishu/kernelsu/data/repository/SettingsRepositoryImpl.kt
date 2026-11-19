@@ -69,6 +69,38 @@ class SettingsRepositoryImpl : SettingsRepository {
         get() = prefs.getString("color_spec", ColorSpec.SpecVersion.SPEC_2025.name) ?: ColorSpec.SpecVersion.SPEC_2025.name
         set(value) = prefs.edit { putString("color_spec", value) }
 
+    override var customBackgroundEnabled: Boolean
+        get() = prefs.getBoolean("custom_background_enabled", false)
+        set(value) = prefs.edit { putBoolean("custom_background_enabled", value) }
+
+    override var backgroundDim: Float
+        get() = prefs.getFloat("background_dim", 0.25f)
+        set(value) = prefs.edit { putFloat("background_dim", value.coerceIn(0f, 0.85f)) }
+
+    override var backgroundOpacity: Float
+        get() = prefs.getFloat("background_opacity", 1f)
+        set(value) = prefs.edit { putFloat("background_opacity", value.coerceIn(0.15f, 1f)) }
+
+    override var backgroundBlur: Boolean
+        get() = prefs.getBoolean("background_blur", true)
+        set(value) = prefs.edit { putBoolean("background_blur", value) }
+
+    override var backgroundFit: Int
+        get() = prefs.getInt("background_fit", 0)
+        set(value) = prefs.edit { putInt("background_fit", value.coerceIn(0, 2)) }
+
+    override var backgroundSeedColor: Boolean
+        get() = prefs.getBoolean("background_seed_color", false)
+        set(value) = prefs.edit { putBoolean("background_seed_color", value) }
+
+    override var backgroundHighContrast: Boolean
+        get() = prefs.getBoolean("background_high_contrast", false)
+        set(value) = prefs.edit { putBoolean("background_high_contrast", value) }
+
+    override var backgroundVersion: Int
+        get() = prefs.getInt("background_version", 0)
+        set(value) = prefs.edit { putInt("background_version", value) }
+
     override var enablePredictiveBack: Boolean
         get() = prefs.getBoolean("enable_predictive_back", false)
         set(value) = prefs.edit { putBoolean("enable_predictive_back", value) }

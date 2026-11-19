@@ -9,6 +9,14 @@ interface SettingsRepository {
     var keyColor: Int
     var colorStyle: String
     var colorSpec: String
+    var customBackgroundEnabled: Boolean
+    var backgroundDim: Float
+    var backgroundOpacity: Float
+    var backgroundBlur: Boolean
+    var backgroundFit: Int
+    var backgroundSeedColor: Boolean
+    var backgroundHighContrast: Boolean
+    var backgroundVersion: Int
     var enablePredictiveBack: Boolean
     var enableSwipeDismiss: Boolean
     var pagerInterceptionMode: Int

@@ -54,6 +54,13 @@ class MainActivityViewModel(
             pagerInterceptionMode = settingRepo.pagerInterceptionMode,
             moduleDescriptionMaxLines = settingRepo.moduleDescriptionMaxLines,
             uiMode = UiMode.fromValue(settingRepo.uiMode),
+            backgroundVersion = settingRepo.backgroundVersion,
+            backgroundEnabled = settingRepo.customBackgroundEnabled,
+            backgroundDim = settingRepo.backgroundDim,
+            backgroundOpacity = settingRepo.backgroundOpacity,
+            backgroundBlur = settingRepo.backgroundBlur,
+            backgroundFit = settingRepo.backgroundFit,
+            backgroundHighContrast = settingRepo.backgroundHighContrast,
         )
     }
 
@@ -72,6 +79,14 @@ class MainActivityViewModel(
             "enable_swipe_dismiss",
             "pager_interception_mode",
             "ui_mode",
+            "custom_background_enabled",
+            "background_dim",
+            "background_opacity",
+            "background_blur",
+            "background_fit",
+            "background_seed_color",
+            "background_high_contrast",
+            "background_version",
         )
     }
 }

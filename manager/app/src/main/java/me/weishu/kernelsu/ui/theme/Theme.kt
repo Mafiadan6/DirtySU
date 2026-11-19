@@ -6,6 +6,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.materialkolor.PaletteStyle
 import com.materialkolor.dynamiccolor.ColorSpec
+import me.weishu.kernelsu.data.repository.CustomBackgroundRepository
 import me.weishu.kernelsu.data.repository.SettingsRepository
 import me.weishu.kernelsu.data.repository.SettingsRepositoryImpl
 import me.weishu.kernelsu.ui.LocalUiMode
@@ -49,6 +50,7 @@ data class AppSettings(
     val keyColor: Int,
     val paletteStyle: PaletteStyle,
     val colorSpec: ColorSpec.SpecVersion,
+    val backgroundSeedColor: Int = 0,
 )
 
 val PaletteStyle.supportsSpec2025: Boolean
@@ -96,7 +98,13 @@ object ThemeController {
             ColorSpec.SpecVersion.SPEC_2025
         }
 
-        return AppSettings(colorMode, keyColor, paletteStyle, colorSpec)
+        val backgroundSeedColor = if (repo.backgroundSeedColor && CustomBackgroundRepository.hasBackground()) {
+            CustomBackgroundRepository.dominantColor()
+        } else {
+            0
+        }
+
+        return AppSettings(colorMode, keyColor, paletteStyle, colorSpec, backgroundSeedColor)
     }
 }
 

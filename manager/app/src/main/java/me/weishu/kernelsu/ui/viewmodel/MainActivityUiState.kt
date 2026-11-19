@@ -16,4 +16,11 @@ data class MainActivityUiState(
     val pagerInterceptionMode: Int,
     val moduleDescriptionMaxLines: Int = 4,
     val uiMode: UiMode,
+    val backgroundVersion: Int = 0,
+    val backgroundEnabled: Boolean = false,
+    val backgroundDim: Float = 0.25f,
+    val backgroundOpacity: Float = 1f,
+    val backgroundBlur: Boolean = true,
+    val backgroundFit: Int = 0,
+    val backgroundHighContrast: Boolean = false,
 )

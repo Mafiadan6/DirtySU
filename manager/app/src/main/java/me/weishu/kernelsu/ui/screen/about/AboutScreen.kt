@@ -16,13 +16,13 @@ fun AboutScreen() {
     val uriHandler = LocalUriHandler.current
     val htmlString = stringResource(
         id = R.string.about_source_code,
-        "<b><a href=\"https://github.com/tiann/KernelSU\">GitHub</a></b>",
-        "<b><a href=\"https://t.me/KernelSU\">Telegram</a></b>"
+        "<b><a href=\"https://github.com/Mafiadan6/DirtySU\">GitHub</a></b>",
+        "<b><a href=\"https://github.com/Mafiadan6\">Dev profile</a></b>"
     )
     val state = AboutUiState(
         title = stringResource(R.string.about),
         appName = stringResource(R.string.app_name),
-        versionName = BuildConfig.VERSION_NAME,
+        versionName = BuildConfig.VERSION_NAME + "  ·  " + stringResource(R.string.about_dev_label) + " " + stringResource(R.string.about_dev_name),
         links = extractLinks(htmlString),
     )
     val actions = AboutScreenActions(

@@ -24,6 +24,7 @@ import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.DeveloperMode
 import androidx.compose.material.icons.rounded.DisplaySettings
 import androidx.compose.material.icons.rounded.FlashOn
+import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.LayersClear
 import androidx.compose.material.icons.rounded.Palette
@@ -175,6 +176,19 @@ fun SettingPagerMiuix(
                                 )
                             },
                             onClick = actions.onOpenTheme
+                        )
+                        ArrowPreference(
+                            title = stringResource(id = R.string.settings_background),
+                            summary = stringResource(id = R.string.settings_background_summary),
+                            startAction = {
+                                Icon(
+                                    Icons.Rounded.Image,
+                                    modifier = Modifier.padding(end = 6.dp),
+                                    contentDescription = stringResource(id = R.string.settings_background),
+                                    tint = colorScheme.onBackground
+                                )
+                            },
+                            onClick = actions.onOpenBackground
                         )
                     }
 

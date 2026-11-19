@@ -1,5 +1,6 @@
 package me.weishu.kernelsu.ui.viewmodel
 
+import android.net.Uri
 import android.system.OsConstants
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.weishu.kernelsu.Natives
 import me.weishu.kernelsu.R
+import me.weishu.kernelsu.data.repository.CustomBackgroundRepository
 import me.weishu.kernelsu.data.repository.SettingsRepository
 import me.weishu.kernelsu.data.repository.SettingsRepositoryImpl
 import me.weishu.kernelsu.ksuApp
@@ -49,6 +51,13 @@ class SettingsViewModel(
             val enableWebDebugging = repo.enableWebDebugging
             val colorStyle = repo.colorStyle
             val colorSpec = repo.colorSpec
+            val customBackgroundEnabled = repo.customBackgroundEnabled
+            val backgroundDim = repo.backgroundDim
+            val backgroundOpacity = repo.backgroundOpacity
+            val backgroundBlur = repo.backgroundBlur
+            val backgroundFit = repo.backgroundFit
+            val backgroundSeedColor = repo.backgroundSeedColor
+            val backgroundHighContrast = repo.backgroundHighContrast
             val isLkmMode = repo.isLkmMode()
 
             // Async loading for natives/features
@@ -92,6 +101,13 @@ class SettingsViewModel(
                     enableWebDebugging = enableWebDebugging,
                     colorStyle = colorStyle,
                     colorSpec = colorSpec,
+                    customBackgroundEnabled = customBackgroundEnabled,
+                    backgroundDim = backgroundDim,
+                    backgroundOpacity = backgroundOpacity,
+                    backgroundBlur = backgroundBlur,
+                    backgroundFit = backgroundFit,
+                    backgroundSeedColor = backgroundSeedColor,
+                    backgroundHighContrast = backgroundHighContrast,
                     suCompatStatus = suCompatStatus,
                     suCompatMode = suCompatMode,
                     isSuEnabled = isSuEnabled,
@@ -341,5 +357,50 @@ class SettingsViewModel(
                 _uiState.update { it.copy(isDefaultUmountModules = enabled) }
             }
         }
+    }
+
+    // --- Custom background -------------------------------------------------
+
+    fun applyBackground(uri: Uri, onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val ok = CustomBackgroundRepository.apply(uri)
+            if (ok) refresh()
+            onResult(ok)
+        }
+    }
+
+    fun removeBackground() {
+        CustomBackgroundRepository.clear()
+        refresh()
+    }
+
+    fun setBackgroundDim(value: Float) {
+        repo.backgroundDim = value
+        _uiState.update { it.copy(backgroundDim = value) }
+    }
+
+    fun setBackgroundOpacity(value: Float) {
+        repo.backgroundOpacity = value
+        _uiState.update { it.copy(backgroundOpacity = value) }
+    }
+
+    fun setBackgroundBlur(enabled: Boolean) {
+        repo.backgroundBlur = enabled
+        _uiState.update { it.copy(backgroundBlur = enabled) }
+    }
+
+    fun setBackgroundFit(fit: Int) {
+        repo.backgroundFit = fit
+        _uiState.update { it.copy(backgroundFit = fit) }
+    }
+
+    fun setBackgroundSeedColor(enabled: Boolean) {
+        repo.backgroundSeedColor = enabled
+        _uiState.update { it.copy(backgroundSeedColor = enabled) }
+    }
+
+    fun setBackgroundHighContrast(enabled: Boolean) {
+        repo.backgroundHighContrast = enabled
+        _uiState.update { it.copy(backgroundHighContrast = enabled) }
     }
 }

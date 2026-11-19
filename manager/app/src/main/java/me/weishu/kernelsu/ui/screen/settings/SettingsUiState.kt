@@ -26,6 +26,15 @@ data class SettingsUiState(
     val moduleDescriptionMaxLines: Int = 4,
     val enableWebDebugging: Boolean = false,
 
+    // Custom background
+    val customBackgroundEnabled: Boolean = false,
+    val backgroundDim: Float = 0.25f,
+    val backgroundOpacity: Float = 1f,
+    val backgroundBlur: Boolean = true,
+    val backgroundFit: Int = 0,
+    val backgroundSeedColor: Boolean = false,
+    val backgroundHighContrast: Boolean = false,
+
     // Su Compat
     val suCompatStatus: String = "",
     val suCompatMode: Int = 0, // 0: enable default, 1: disable until reboot, 2: disable always
@@ -65,6 +74,7 @@ data class SettingsScreenActions(
     val onSetCheckUpdate: (Boolean) -> Unit,
     val onSetCheckModuleUpdate: (Boolean) -> Unit,
     val onOpenTheme: () -> Unit,
+    val onOpenBackground: () -> Unit,
     val onSetUiModeIndex: (Int) -> Unit,
     val onOpenProfileTemplate: () -> Unit,
     val onSetSuCompatMode: (Int) -> Unit,

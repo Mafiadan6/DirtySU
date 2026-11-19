@@ -63,6 +63,7 @@ import androidx.compose.ui.unit.dp
 import me.weishu.kernelsu.KernelVersion
 import me.weishu.kernelsu.Natives
 import me.weishu.kernelsu.R
+import me.weishu.kernelsu.ui.component.HackerHero
 import me.weishu.kernelsu.ui.component.WarningLevel
 import me.weishu.kernelsu.ui.component.dialog.rememberConfirmDialog
 import me.weishu.kernelsu.ui.component.material.ExpressiveScaffold
@@ -93,6 +94,15 @@ fun HomePagerMaterial(
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(13.dp)
         ) {
+            val rootActive = state.ksuVersion != null
+            val heroVersion = state.ksuVersion?.let { "v$it" }
+            val heroMode = when (state.lkmMode) {
+                true -> "LKM"
+                false -> "GKI"
+                null -> ""
+            }
+            HackerHero(rootActive = rootActive, version = heroVersion, mode = heroMode)
+
             if (state.checkUpdateEnabled) {
                 UpdateCard(state = state, actions = actions)
             }

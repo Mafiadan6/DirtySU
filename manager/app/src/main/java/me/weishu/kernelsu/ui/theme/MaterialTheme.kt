@@ -19,22 +19,35 @@ fun MaterialKernelSUTheme(
     val context = LocalContext.current
     val systemDarkTheme = isSystemInDarkTheme()
     val darkTheme = appSettings.colorMode.isDark || (appSettings.colorMode.isSystem && systemDarkTheme)
-    val amoledMode = appSettings.colorMode.isAmoled
+    val amoledMode = true
     val dynamicColor = appSettings.keyColor == 0
+    val seedColor = when {
+        appSettings.backgroundSeedColor != 0 -> Color(appSettings.backgroundSeedColor)
+        dynamicColor -> Color.Unspecified
+        else -> Color(appSettings.keyColor)
+    }
 
-    val colorScheme = rememberKernelSUColorScheme(
-        seedColor = if (dynamicColor) Color.Unspecified else Color(appSettings.keyColor),
+    val baseScheme = rememberKernelSUColorScheme(
+        seedColor = seedColor,
         isDark = darkTheme,
         isAmoled = amoledMode,
         paletteStyle = appSettings.paletteStyle,
         colorSpec = appSettings.colorSpec,
     )
+    val accent = if (appSettings.backgroundSeedColor != 0) {
+        Color(appSettings.backgroundSeedColor)
+    } else if (appSettings.keyColor != 0) {
+        Color(appSettings.keyColor)
+    } else {
+        baseScheme.primary
+    }
+    val colorScheme = HackerTheme.recolor(baseScheme, accent)
 
     LaunchedEffect(darkTheme) {
         val window = (context as? Activity)?.window ?: return@LaunchedEffect
         WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = !darkTheme
-            isAppearanceLightNavigationBars = !darkTheme
+            isAppearanceLightStatusBars = false
+            isAppearanceLightNavigationBars = false
         }
     }
 
@@ -43,7 +56,7 @@ fun MaterialKernelSUTheme(
     MaterialExpressiveTheme(
         colorScheme = animatedColorScheme,
         motionScheme = MotionScheme.expressive(),
-        typography = Typography,
+        typography = HackerTheme.Typography,
         content = {
             MonetColorsProvider.UpdateCss(colorScheme)
             content()
